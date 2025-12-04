@@ -1,0 +1,23 @@
+# [Pico 코드: main.py]
+# pico로 마이크소리 받아들이기 마이크 1개
+import machine
+import sys
+import time
+
+# 마이크 핀 설정 (GP26)
+mic = machine.ADC(26)
+
+# ADC 읽기 속도 조절 (너무 빠르면 노트북이 못 받아먹음)
+# 0이면 최대 속도지만, 약간의 딜레이를 주는 게 안정적일 수 있음
+DELAY_US = 20 
+
+while True:
+    # 1. 아날로그 값 읽기 (0 ~ 65535)
+    val = mic.read_u16()
+    
+    # 2. 2바이트(16비트) 데이터로 변환해서 USB로 쏘기
+    # 'big'은 빅 엔디안 방식 (순서)
+    sys.stdout.buffer.write(val.to_bytes(2, 'big'))
+    
+    # 약간의 딜레이 (필요시 조절)
+    # time.sleep_us(DELAY_US)
