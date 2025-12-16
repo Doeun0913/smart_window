@@ -1,59 +1,71 @@
-from machine import I2S, Pin
-import array
+from machine import Pin, I2S
 import math
+import array
 import time
 
 # ==========================================
-# 1. DAC 설정 (PCM5102 등)
+# 1. 핀 설정 (사용자 지정: 10, 11, 12)
 # ==========================================
-# 핀 설정 (원하는 대로 변경 가능)
-SCK_PIN = Pin(10)  # BCK
-WS_PIN = Pin(11)   # LCK / LRC
-SD_PIN = Pin(12)   # DIN / DATA
+# DAC 핀 매핑
+SCK_PIN = Pin(10)  # DAC BCK
+WS_PIN  = Pin(11)  # DAC LCK
+SD_PIN  = Pin(12)  # DAC DIN
 
-# I2S 초기화 (표준 오디오 규격)
-audio_out = I2S(
-    0,
-    sck=SCK_PIN,
-    ws=WS_PIN,
-    sd=SD_PIN,
-    mode=I2S.TX,
-    bits=16,
-    format=I2S.MONO, # 진동자 하나면 MONO
-    rate=22050,      # 샘플링 레이트
-    ibuf=2000        # 버퍼 크기
-)
+print("🔊 하드웨어 테스트 시작!")
+print("핀 설정: BCK=GP10, LCK=GP11, DIN=GP12")
 
 # ==========================================
-# 2. 소리 만들기 (Sine Wave)
+# 2. I2S 초기화 (STEREO 모드)
 # ==========================================
-def make_tone(freq, rate):
-    # 1주기 동안의 샘플 개수
-    samples_per_cycle = rate // freq
-    buffer = array.array("h", [0] * samples_per_cycle)
+try:
+    audio_out = I2S(
+        0,
+        sck=SCK_PIN,
+        ws=WS_PIN,
+        sd=SD_PIN,
+        mode=I2S.TX,
+        bits=16,
+        format=I2S.STEREO, # 두 개 다 울리기 위해 스테레오
+        rate=22050,
+        ibuf=2000
+    )
+except Exception as e:
+    print("❌ I2S 초기화 실패! 핀 번호를 확인하세요.")
+    print(e)
+    raise
+
+# ==========================================
+# 3. 200Hz 소리 데이터 만들기
+# ==========================================
+RATE = 22050
+FREQ = 200
+SAMPLES = int(RATE / FREQ) # 약 110개
+
+# 16비트 최대 볼륨 (32767)에 가까운 값
+VOLUME = 32000 
+
+# 버퍼 생성 (L, R 두 채널이므로 크기는 2배)
+wave_buf = array.array('h', [0] * (SAMPLES * 2))
+
+for i in range(SAMPLES):
+    # 사인파 계산
+    val = int(VOLUME * math.sin(2 * math.pi * i / SAMPLES))
     
-    # 16비트(-32768 ~ 32767) 범위로 사인파 생성
-    volume = 32000 # 최대 볼륨에 가까움
-    
-    for i in range(samples_per_cycle):
-        buffer[i] = int(volume * math.sin(2 * math.pi * i / samples_per_cycle))
-        
-    return buffer
+    # 왼쪽(L)과 오른쪽(R)에 똑같은 값 넣기 (Dual Mono)
+    wave_buf[2*i]     = val  # Left
+    wave_buf[2*i + 1] = val  # Right
 
-# 200Hz 소리 데이터 생성
-tone_data = make_tone(200, 22050)
-
-print("🔊 DAC 테스트 시작! (I2S Mode)")
-print("진동자가 부드럽고 강하게 울려야 합니다.")
+print(f"🎵 200Hz 톤 재생 중... (진동자를 만져보세요)")
+print("멈추려면 정지 버튼(STOP)을 누르세요.")
 
 # ==========================================
-# 3. 재생 (무한 반복)
+# 4. 무한 재생
 # ==========================================
 try:
     while True:
-        # 버퍼에 있는 데이터를 DAC로 전송 (하드웨어가 알아서 함)
-        audio_out.write(tone_data)
-
+        # 만들어둔 파형을 계속 쏘기
+        audio_out.write(wave_buf)
+        
 except KeyboardInterrupt:
+    print("\n테스트 종료.")
     audio_out.deinit()
-    print("종료")
