@@ -1,0 +1,45 @@
+{
+  "system": {
+    "checkInterval": 30000,
+    "maxRestartAttempts": 3,
+    "restartCooldown": 300000
+  },
+  "monitoring": {
+    "metricsRetention": 10080,
+    "logRetention": 30,
+    "backupRetention": 30
+  },
+  "alerts": {
+    "email": {
+      "enabled": false,
+      "smtp": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "secure": false,
+        "auth": {
+          "user": "your-email@gmail.com",
+          "pass": "your-password"
+        }
+      },
+      "recipients": ["admin@example.com"]
+    },
+    "webhook": {
+      "enabled": false,
+      "url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+    }
+  },
+  "backup": {
+    "database": {
+      "schedule": "0 2 * * *",
+      "retention": 30
+    },
+    "files": {
+      "schedule": "0 4 * * 0",
+      "retention": 12
+    },
+    "logs": {
+      "schedule": "0 3 * * *",
+      "retention": 7
+    }
+  }
+}

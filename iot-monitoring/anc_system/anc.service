@@ -1,0 +1,21 @@
+[Unit]
+Description=Smart Home IoT - ANC System
+After=network.target
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/smart-home-iot/iot-monitoring/anc_system
+ExecStart=/usr/bin/python3 /home/user/smart-home-iot/iot-monitoring/anc_system/anc_headless.py
+Restart=always
+RestartSec=10
+
+# 로그 설정
+StandardOutput=append:/home/user/smart-home-iot/iot-monitoring/logs/anc.log
+StandardError=append:/home/user/smart-home-iot/iot-monitoring/logs/anc-error.log
+
+# 환경 변수
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+# ANC System with IoT Dashboard Integration
+# Python 3.8+ required
+
+# Serial communication
+pyserial>=3.5
+
+# Audio output
+sounddevice>=0.4.6
+
+# Data processing
+numpy>=1.21.0
+
+# Visualization
+matplotlib>=3.5.0
+
+# HTTP requests for API
+requests>=2.28.0

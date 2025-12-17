@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#3B82F6" />
+    <meta name="description" content="스마트 홈 IoT 모니터링 시스템 - 온습도, 미세먼지, 소음 측정 및 PDLC 제어" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Smart Home" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- Pretendard 폰트 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet" />
+    <title>스마트 홈 IoT</title>
+    <style>
+      /* 초기 로딩 스타일 */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 50%, #EFF6FF 100%);
+        min-height: 100vh;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* 초기 로딩 스피너 */
+      .initial-loader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        gap: 1.5rem;
+      }
+      
+      .initial-loader .spinner {
+        width: 60px;
+        height: 60px;
+        position: relative;
+      }
+      
+      .initial-loader .spinner::before,
+      .initial-loader .spinner::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 4px solid transparent;
+      }
+      
+      .initial-loader .spinner::before {
+        border-top-color: #3B82F6;
+        animation: spin 1s linear infinite;
+      }
+      
+      .initial-loader .spinner::after {
+        border-bottom-color: #10B981;
+        animation: spin 1.5s linear infinite reverse;
+        inset: 8px;
+      }
+      
+      .initial-loader p {
+        color: #64748B;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>이 앱을 사용하려면 JavaScript를 활성화해야 합니다.</noscript>
+    <div id="root">
+      <div class="initial-loader">
+        <div class="spinner"></div>
+        <p>스마트 홈을 불러오는 중...</p>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+

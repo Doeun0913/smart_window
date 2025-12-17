@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment files
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# PID files
+*.pid
+.*.pid
+
+# Database (optional - remove if you want to track)
+*.db
+*.sqlite
+
+# Build outputs
+dist/
+build/
+.next/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backups (optional - remove if you want to track)
+# backups/
+
+# Temporary files
+*.tmp
+*.temp

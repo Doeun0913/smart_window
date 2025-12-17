@@ -1,0 +1,16 @@
+# Sensor stack
+adafruit-circuitpython-dht
+Adafruit-Blinka
+
+# GPIO backends (설치 환경에 맞는 항목만 사용)
+RPi.GPIO
+rpi-lgpio
+
+# API & Web
+requests
+flask
+
+# Camera & Vision (제스처 인식용)
+opencv-python
+numpy
+picamera2

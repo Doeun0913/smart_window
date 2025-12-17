@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-12-16T02:46:18.914Z",
+  "type": "files",
+  "file": "/home/user/smart-home-iot/iot-monitoring/backups/files/files-backup-2025-12-16T02-46-16-358Z.zip",
+  "size": 26429,
+  "files": [
+    "backend/server.js",
+    "backend/package.json",
+    "backend/.env",
+    "frontend/package.json",
+    "frontend/src/**/*",
+    "database/schema.sql",
+    "raspberry-pi/*.py",
+    "raspberry-pi/requirements.txt",
+    "start.sh",
+    ".env.example"
+  ]
+}
